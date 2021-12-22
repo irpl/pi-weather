@@ -5,7 +5,7 @@ module.exports = {
       script: "./src/weather.py",
       args: [],
       env: {
-          SERVER_URL: "http://philliplogan.com:3040",
+          SERVER_URL: "http://192.168.100.222:3040/data",
       },
       exec_mode: "fork",
       instances: "1",

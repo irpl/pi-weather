@@ -17,15 +17,15 @@ VOLTS_ANGLE = {
 	2.8: 67.5,
 	2.75: 90.0,
 	2.9: 112.5,
-	2.29:135.0, 2.3: 135.0,
-	2.58: 157.5,
-	1.86: 180.0,
+	2.29: 135.0, 2.3: 135.0,
+	2.57: 157.5, 2.58: 157.5,
+	1.85: 180.0, 1.86: 180.0,
 	2.03: 202.5,
-	0.79: 225.0,
+	0.78: 225.0, 0.79: 225.0,
 	0.87: 247.5, 0.86: 247.5,
 	0.13: 270.0, 0.14: 270.0,
 	0.35: 292.5, 0.36: 292.5,
-	0.24: 315.0,
+	0.23: 315.0, 0.24: 315.0,
 	0.62: 337.5, 0.61: 337.5
 }
 
@@ -53,6 +53,7 @@ def getWindDir():
 	time.sleep(DIR_INTERVAL)
 	wind_dir = round(ADC.value * 3.3, 2)
 	if not wind_dir in VOLTS_ANGLE:
+		print("unknown volt angle: " + str(wind_dir))
 		return { "winddir": -1 }
 	else:
 		return { "winddir": VOLTS_ANGLE[wind_dir] }
@@ -119,9 +120,10 @@ with concurrent.futures.ThreadPoolExecutor() as executor:
 		# print (res_dict)
 		try:
 			res = requests.post(SERVER_URL, json=res_dict)
-			print(res.text)
+			print(f"{time.strftime('%Y-%m-%dT%H:%M:%S -' , time.localtime())} {res.text}" )
 		except Exception as e:
-			print(e)
+			print(f"{time.strftime('%Y-%m-%dT%H:%M:%S -' , time.localtime())} {e}")
 
 		# f = time.perf_counter()
 		# print(f"Finished in {round(f-s, 2)} second(s)")
+		# print(time.strftime('%Y-%m-%dT%H:%M:%S -' , time.localtime()), "hello")
